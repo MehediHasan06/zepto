@@ -1,0 +1,16 @@
+{
+  "name": "zepto",
+  "version": "1.0.0",
+  "description": "Shopify Zepto Theme",
+  "main": "index.js",
+  "scripts": {
+    "tailwind": "npx tailwindcss -i ./index.css -o ./assets/style.css --watch"
+  },
+  "author": "Mehedi Hasan",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6"
+  }
+}

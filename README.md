@@ -1,1 +1,1 @@
-# zepto
+# Zepto Theme
