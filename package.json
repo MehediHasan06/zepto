@@ -5,15 +5,20 @@
     "dev": "run-p -sr shopify:dev watch",
     "shopify:dev": "shopify theme dev",
     "watch": "vite build --watch",
-    "build": "vite build --minify"
+    "build": "vite build --minify",
+    "prettier:format": "prettier --write '**/*.liquid'"
   },
   "author": "Mehedi Hasan",
   "license": "ISC",
   "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.4.0",
+    "alpinejs": "^3.13.3",
     "autoprefixer": "^10.4.16",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.32",
+    "prettier": "^3.1.1",
     "tailwindcss": "^3.3.6",
-    "vite": "^5.0.7"
+    "vite": "^5.0.7",
+    "vite-plugin-static-copy": "^1.0.0"
   }
 }
