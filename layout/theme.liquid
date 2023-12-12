@@ -11,7 +11,10 @@
 		<!-- Header hook for plugins -->
 		{{ content_for_header }}
 
-		<link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
+    {% liquid
+      render 'vite-tag' with 'main.css'
+      render 'vite-tag' with 'app.js'
+    %}
 	</head>
 	<body>
 		<main role="main">{{ content_for_layout }}</main>
