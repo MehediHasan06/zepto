@@ -1,0 +1,12 @@
+{
+  "frontend/entrypoints/app.js": {
+    "file": "app.js",
+    "isEntry": true,
+    "src": "frontend/entrypoints/app.js"
+  },
+  "frontend/entrypoints/main.css": {
+    "file": "main.css",
+    "isEntry": true,
+    "src": "frontend/entrypoints/main.css"
+  }
+}

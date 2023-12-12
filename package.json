@@ -2,18 +2,24 @@
   "name": "zepto",
   "description": "Shopify Zepto Theme",
   "scripts": {
-    "dev": "run-p -sr shopify:dev watch",
+    "dev": "run-p -sr shopify:dev vite:dev",
     "shopify:dev": "shopify theme dev",
-    "watch": "vite build --watch",
-    "build": "vite build --minify"
+    "vite:dev": "vite dev",
+    "build": "vite build",
+    "prettier:format": "prettier --write '**/*.liquid'"
   },
   "author": "Mehedi Hasan",
   "license": "ISC",
   "devDependencies": {
+    "@by-association-only/vite-plugin-shopify-clean": "^1.1.0",
+    "@shopify/prettier-plugin-liquid": "^1.4.0",
+    "alpinejs": "^3.13.3",
     "autoprefixer": "^10.4.16",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.32",
+    "rollup-plugin-copy": "^3.5.0",
     "tailwindcss": "^3.3.6",
-    "vite": "^5.0.7"
+    "vite": "^4.5.0",
+    "vite-plugin-shopify": "^2.2.1"
   }
 }
