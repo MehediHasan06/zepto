@@ -8,7 +8,10 @@
 		<link rel="canonical" href="{{ canonical_url }}">
 		<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
-		<!-- Header hook for plugins -->
+    {%- comment -%}
+      content_for_header dynamically loads all scripts required by Shopify into the document head. 
+      These scripts are required for features like reCAPTCHA, Shopify apps, and more.
+    {%- endcomment -%}
 		{{ content_for_header }}
 
 		{% liquid
@@ -18,6 +21,7 @@
 	</head>
 	<body>
 		{% sections 'header-group' %}
+    {%- comment -%} The content_for_layout object dynamically outputs the content for each template. {%- endcomment -%}
 		<main role="main">{{ content_for_layout }}</main>
 	</body>
 </html>
