@@ -1,5 +1,4 @@
 import cleanup from '@by-association-only/vite-plugin-shopify-clean'
-import copy from 'rollup-plugin-copy'
 import { defineConfig } from 'vite'
 import shopify from 'vite-plugin-shopify'
 
@@ -17,10 +16,10 @@ export default defineConfig({
   plugins: [
     shopify(),
     cleanup(),
-    copy({
-      targets: [
-        {src: ['src/liquid/sections/**/*.liquid'], dest: 'sections', flatten: true},
-      ]
-    })
+    // copy({
+    //   targets: [
+    //     {src: ['src/liquid/sections/**/*.liquid'], dest: 'sections', flatten: true},
+    //   ]
+    // })
   ]
 })
