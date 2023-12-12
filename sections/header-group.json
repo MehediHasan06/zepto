@@ -20,9 +20,14 @@
       "settings": {
         "text_align": "text-center"
       }
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
     }
   },
   "order": [
-    "announcement-bar"
+    "announcement-bar",
+    "header"
   ]
 }
