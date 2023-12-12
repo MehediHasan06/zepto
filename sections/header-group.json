@@ -1,0 +1,28 @@
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "f05fa65e-f757-4a02-976a-5b12b3c2c80d": {
+          "type": "announcement-bar",
+          "settings": {
+            "text_content": "<p>Welcome to Zepto Theme<\/p>",
+            "bg_color": "#090808",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "f05fa65e-f757-4a02-976a-5b12b3c2c80d"
+      ],
+      "settings": {
+        "text_align": "text-center"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar"
+  ]
+}
