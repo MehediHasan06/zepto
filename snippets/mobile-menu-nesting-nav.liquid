@@ -1,0 +1,75 @@
+{% comment %}
+	Render complex nesting child-grandchild navmenu UI for mobile.
+
+	Accepts:
+	- link: {Objext} Link Object
+
+	Usage:
+	{% render 'mobile-menu-nesting-nav', link: link %}
+{% endcomment %}
+
+<ul x-data="{ openChild: false }" x-cloak class="w-full">
+	<li class="flex justify-between">
+		<a
+			href="{{ link.url }}"
+			class="inline-flex items-center py-3 text-base"
+		>
+			{{ link.title | escape }}
+		</a>
+		<button
+			type="button"
+			@click.prevent="openChild = !openChild"
+			title="Toggle menu"
+			class="relative text-right"
+		>
+			{% render 'icon-chevron-down', class: 'w-5' %}
+		</button>
+	</li>
+	<ul x-show="openChild">
+		<ul class="pl-2 ml-3">
+			{% for childMenu in link.links %}
+				<li class="relative">
+					<!-- menu grandchild -->
+					{% if childMenu.links.size > 0 %}
+						{% comment %} If there are any grandchilds {% endcomment %}
+						<ul x-data="{ openGrandChild: false }" x-cloak class="w-full">
+							<li class="flex justify-between">
+								<a
+									href="{{ childMenu.url }}"
+									class="inline-flex items-center py-3 text-base"
+								>
+									{{ childMenu.title | escape }}
+								</a>
+								<button
+									type="button"
+									@click.prevent="openGrandChild = !openGrandChild"
+									title="Toggle menu"
+									class="relative text-right"
+								>
+									{% render 'icon-chevron-down', class: 'w-5' %}
+								</button>
+							</li>
+							<ul x-show="openGrandChild">
+								<ul class="pl-2 ml-3">
+									{% for grandChildMenu in childMenu.links %}
+										<li class="relative">
+											<a href="{{ grandChildMenu.url }}" class="block w-full py-3 text-sm">
+												{{ grandChildMenu.title }}
+											</a>
+										</li>
+									{% endfor %}
+								</ul>
+							</ul>
+						</ul>
+
+					{% else %}
+						{% comment %} If there are no grandchilds {% endcomment %}
+						<a href="{{ childMenu.url }}" class="block w-full py-3 text-sm">
+							{{ childMenu.title }}
+						</a>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</ul>
+</ul>

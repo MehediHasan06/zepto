@@ -20,9 +20,20 @@
       "settings": {
         "text_align": "text-center"
       }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo": "shopify:\/\/shop_images\/Lumen_Technologies_Logo.png",
+        "logo_width": 200,
+        "menu": "main-menu",
+        "enable_sticky_header": true,
+        "margin_bottom": 0
+      }
     }
   },
   "order": [
-    "announcement-bar"
+    "announcement-bar",
+    "header"
   ]
 }
