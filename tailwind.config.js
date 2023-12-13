@@ -3,7 +3,11 @@
 export default {
   content: ["./**/*.liquid"],
   theme: {
-    extend: {},
+    extend: {
+      maxWidth: {
+        'desktop': '1200px'
+      }
+    },
   },
   plugins: [],
 }

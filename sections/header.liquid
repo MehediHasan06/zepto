@@ -1,23 +1,22 @@
-<div class="border-y">
-  <header class="grid items-center grid-cols-3 header max-w-screen-2xl">
+  <header class="grid items-center mx-auto header max-w-desktop">
   
-      <div class="col-span-1 mx-auto my-2 header__logo md:my-0 md:mr-auto md:ml-0" style="max-width: {{ section.settings.logo_width }}px;">
+      <div class="mx-auto my-2 header_logo" style="max-width: {{ section.settings.logo_width }}px;">
         {% if section.settings.logo != blank %}
-          <a href="/" class="header__logo">
-            {{ section.settings.logo | image_url: width: 400 | image_tag: loading: 'lazy' }}
+          <a href="/" class="header_logo">
+            {{ section.settings.logo | image_url: width: 400 | image_tag }}
           </a>
         {% else %}
-          <a href="/" class="header__logo-title">
+          <a href="/" class="header_logo-title">
             {{ shop.name }}
           </a>
         {% endif %}
       </div>
   
-      <nav class="flex col-span-2 header__menu" x-data>
+      <nav class="flex header_menu" x-data>
+        <p>Navigations</p>
         {% comment %} <button class="md:hidden" @click="$dispatch('toggle-menu')" type="button">
           {% render 'icon-menu', class: 'w-10' %}
         </button>
-
         <ul class="hidden header__menu-nav md:flex">
           {% for link in section.settings.menu.links %}
             {% if link.links != blank %}
@@ -42,9 +41,10 @@
         </ul> {% endcomment %}
       </nav>
   
-      <div class="flex items-center justify-end col-span-1 space-x-5 header__icons"
+      <div class="flex items-center justify-end space-x-5 header_icons"
         x-data="{ cart_count: {{ cart.item_count }} }"
         @cart-count-updated.window="cart_count = $event.detail">
+        <p>icons</p>
         {% comment %} {%- if shop.customer_accounts_enabled -%}
           <div class="relative z-10 account-menu-wrapper">
             <a href="{{ routes.account_url }}" 
@@ -63,7 +63,6 @@
             </a>
           </div>
         {%- endif -%}
-
           <button 
             type="button"
             title="Cart button"
@@ -76,8 +75,6 @@
       </div>
   
   </header>
-
-</div>
 
 
 {% schema %}
@@ -102,7 +99,7 @@
       "min": 50,
       "max": 250,
       "step": 10,
-      "default": 100,
+      "default": 150,
       "unit": "px",
       "label": "Logo Width"
     },
@@ -111,12 +108,6 @@
       "id": "menu",
       "default": "main-menu",
       "label": "Navigation Menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_line_separator",
-      "default": true,
-      "label": "t:sections.header.settings.show_line_separator.label"
     },
     {
       "type": "checkbox",
