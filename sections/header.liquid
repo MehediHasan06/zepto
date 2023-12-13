@@ -1,4 +1,5 @@
-<header class="grid items-center mx-auto header max-w-desktop">
+<header class="grid items-center px-6 py-2 mx-auto header md:max-w-desktop md:px-12 md:py-5">
+	<!-- Header Logo -->
 	<div class="mx-auto my-2 header_logo" style="max-width: {{ section.settings.logo_width }}px;">
 		{% if section.settings.logo != blank %}
 			<a href="/" class="header_logo">
@@ -11,72 +12,86 @@
 		{% endif %}
 	</div>
 
+	<!-- Header Menu -->
 	<nav class="flex header_menu" x-data>
-		<p>Navigations</p>
-		{% comment %}
-			<button class="md:hidden" @click="$dispatch('toggle-menu')" type="button">
-			  {% render 'icon-menu', class: 'w-10' %}
-			</button>
-			<ul class="hidden header__menu-nav md:flex">
-			  {% for link in section.settings.menu.links %}
-			    {% if link.links != blank %}
-			      <li class="relative block px-4 py-5 nav__item">
-			          <a href="{{ link.url }}">{{ link.title }}</a>
-			          <ul class="nav__item-submenu absolute bg-white border py-3 px-4 min-w-[160px] top-16 left-1/2 transform -translate-x-1/2">
-			            {% for sublink in linklists[link.handle].links %}
-			              <li>
-			                <a class="block py-1 hover:opacity-75 " href="{{ sublink.url }}">
-			                  {{ sublink.title }}
-			                </a>
-			              </li>
-			            {% endfor %}
-			          </ul>
-			      </li>
-			    {% else %}
-			      <li>
-			        <a class="block px-4 py-5 nav__item" href="{{ link.url }}"> {{ link.title }}</a>
-			      </li>
-			    {% endif %}
-			  {% endfor %}
-			</ul>
-		{% endcomment %}
+		<button class="md:hidden" @click="$dispatch('toggle-menu')" type="button">
+			{% render 'icon-hamburger', class: 'w-5' %}
+		</button>
+
+		<ul class="hidden md:flex">
+			{% for link in section.settings.menu.links %}
+				<li class="relative block px-3 py-2 nav_item">
+					<a class="block text-gray-500 border-black hover:text-black hover:border-b" href="{{ link.url }}">
+						{{- link.title -}}
+					</a>
+
+					<!-- dropdown child -->
+					{% if link.links.size > 0 %}
+						<ul class="dropdown-child hidden absolute bg-white border min-w-[200px] top-10 left-1/2 transform -translate-x-1/2 hover:block">
+							{% for child_link in link.links %}
+								<li class="relative flex justify-between px-3 py-2 hover:bg-gray-100 child_nav_item">
+									<a class="block" href="{{ child_link.url }}">{{ child_link.title }}</a>
+									{% if child_link.links.size > 0 %}
+										{% render 'icon-chevron-right', class: 'w-5' %}
+									{% endif %}
+
+									<!-- dropdown grandchild -->
+									{% if child_link.links.size > 0 %}
+										<ul class="dropdown-grandchild hidden absolute bg-white border min-w-[200px] top-0 left-full">
+											{% for grandchild_link in child_link.links %}
+												<li class="relative block px-3 py-2 hover:bg-gray-100 child_nav_item">
+													<a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+												</li>
+											{% endfor %}
+										</ul>
+									{% endif %}
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
 	</nav>
 
+  <!-- Header Icons -->
 	<div
-		class="flex items-center justify-end space-x-5 header_icons"
+		class="flex items-center justify-end header_icons"
 		x-data="{ cart_count: {{ cart.item_count }} }"
-		@cart-count-updated.window="cart_count = $event.detail"
 	>
-		<p>icons</p>
-		{% comment %}
-			{%- if shop.customer_accounts_enabled -%}
-			  <div class="relative z-10 account-menu-wrapper">
-			    <a href="{{ routes.account_url }}"
-			      title="account link"
-			      class="block text-center header__icon">
-			      {% render 'icon-account', class: 'w-10 mx-auto' %}
-			      <span class="sr-only">
-			        {%- liquid
-			          if customer
-			            echo 'customer.account_fallback' | t
-			          else
-			            echo 'customer.account_fallback' | t
-			          endif
-			        -%}
-			      </span>
-			    </a>
-			  </div>
-			{%- endif -%}
-			  <button
-			    type="button"
-			    title="Cart button"
-			    @click="$dispatch('toggle-cart')"
-			    class="relative text-center header__icon">
-			      {% render 'icon-cart', class: 'w-10' %}
-			      <span class="sr-only">{{ 'templates.cart.cart' | t }}</span>
-			      <span x-text="cart_count" class="cart__count min-w-[22px] text-sm min-h-[22px] absolute grid place-content-center rounded-full -top-3 -right-1 text-white bg-black"> {{ cart.item_count }} </span>
-			  </button>
-		{% endcomment %}
+		{%- if shop.customer_accounts_enabled -%}
+			<div class="relative z-10">
+				<a
+					href="{{ routes.account_url }}"
+					title="account link"
+					class="block text-center"
+				>
+					{% render 'icon-account', class: 'w-10' %}
+					<span class="sr-only">
+						{%- liquid
+							if customer
+								echo 'customer.account_fallback' | t
+							else
+								echo 'customer.account_fallback' | t
+							endif
+						-%}
+					</span>
+				</a>
+			</div>
+		{%- endif -%}
+		<button
+			type="button"
+			class="relative ml-0 text-center"
+		>
+			{% render 'icon-cart', class: 'w-10' %}
+			<span class="sr-only">{{ 'templates.cart.cart' | t }}</span>
+			<span
+				x-text="cart_count"
+				class="min-w-[22px] text-sm min-h-[22px] absolute grid place-content-center rounded-full -top-3 -right-1 text-white bg-black"
+			>
+				{{ cart.item_count }}
+			</span>
+		</button>
 	</div>
 </header>
 

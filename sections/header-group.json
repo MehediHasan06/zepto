@@ -23,7 +23,13 @@
     },
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "logo": "shopify:\/\/shop_images\/Lumen_Technologies_Logo.png",
+        "logo_width": 200,
+        "menu": "main-menu",
+        "enable_sticky_header": true,
+        "margin_bottom": 0
+      }
     }
   },
   "order": [
