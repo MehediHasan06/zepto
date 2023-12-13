@@ -7,7 +7,7 @@ export default {
       maxWidth: {
         'desktop': '1200px'
       }
-    },
+    }
   },
   plugins: [],
 }
