@@ -1,0 +1,31 @@
+{% comment %}
+	Render complex nesting child-grandchild dropdown navmenu UI for desktop.
+
+	Accepts:
+	- link: {Objext} Link Object
+
+	Usage:
+	{% render 'desktop-menu-dropdown-nav', link: link %}
+{% endcomment %}
+
+<ul class="dropdown-child hidden absolute bg-white border min-w-[200px] top-10 left-1/2 transform -translate-x-1/2 hover:block">
+	{% for child_link in link.links %}
+		<li class="relative flex justify-between px-3 py-2 hover:bg-gray-100 child_nav_item">
+			<a class="block" href="{{ child_link.url }}">{{ child_link.title }}</a>
+			{% if child_link.links.size > 0 %}
+				{% render 'icon-chevron-right', class: 'w-5' %}
+			{% endif %}
+
+			<!-- dropdown grandchild -->
+			{% if child_link.links.size > 0 %}
+				<ul class="dropdown-grandchild hidden absolute bg-white border min-w-[200px] top-0 left-full">
+					{% for grandchild_link in child_link.links %}
+						<li class="relative block px-3 py-2 hover:bg-gray-100 child_nav_item">
+							<a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>
