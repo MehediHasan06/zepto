@@ -6,6 +6,5 @@
 {% if path == '/frontend/entrypoints/app.js' or path == 'app.js' %}
 	<script src="{{ 'app.js' | asset_url | split: '?' | first }}" type="module" crossorigin="anonymous"></script>
 {% elsif path == '/frontend/entrypoints/main.css' or path == 'main.css' %}
-  <script>console.log('inside the main css')</script>
 	{{ 'main.css' | asset_url | split: '?' | first | stylesheet_tag: preload: preload_stylesheet }}
 {% endif %}

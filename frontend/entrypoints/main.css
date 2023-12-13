@@ -2,33 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Header */
-.header {
-	display: grid;
-	grid-template-areas: "header-logo header-menu header-icons";
-	grid-template-columns: 1fr 2fr 1fr;
-}
-.header .header_logo {
-	grid-area: header-logo;
-}
-.header .header_menu {
-	grid-area: header-menu;
-}
-.header .header_icons {
-	grid-area: header-icons;
-}
-
-@media screen and (max-width: 768px) {
-	.header {
-		grid-template-areas: "header-menu header-logo header-icons";
-	}
-}
-/* Submenu */
-.header .nav_item:hover .dropdown-child {
-  display: block;
-}
-.header .child_nav_item:hover .dropdown-grandchild {
-  display: block;
-}
 
 
