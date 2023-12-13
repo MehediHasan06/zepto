@@ -1,0 +1,144 @@
+<header
+	class="grid items-center px-6 py-2 mx-auto header md:max-w-desktop md:px-12 md:py-5"
+>
+	<!-- Header Logo -->
+	<div class="mx-auto my-2 header_logo" style="max-width: {{ section.settings.logo_width }}px;">
+		{% if section.settings.logo != blank %}
+			<a href="/" class="header_logo">
+				{{ section.settings.logo | image_url: width: 400 | image_tag }}
+			</a>
+		{% else %}
+			<a href="/" class="header_logo-title">
+				{{ shop.name }}
+			</a>
+		{% endif %}
+	</div>
+
+	<!-- Header Menu -->
+	<nav class="flex header_menu" x-data="{ hamburgerIcon: true }">
+		<button
+			class="md:hidden"
+			@click="$dispatch('toggle-menu'); hamburgerIcon = !hamburgerIcon; overflow = !overflow"
+			type="button"
+		>
+			<div x-show="hamburgerIcon">
+				{% render 'icon-hamburger', class: 'w-5' %}
+			</div>
+			<div x-show="!hamburgerIcon">
+				{% render 'icon-close', class: 'w-5' %}
+			</div>
+		</button>
+
+		<ul class="hidden md:flex">
+			{% for link in section.settings.menu.links %}
+				<li class="relative block px-3 py-2 nav_item">
+					<a class="block text-gray-500 border-black hover:text-black hover:border-b" href="{{ link.url }}">
+						{{- link.title -}}
+					</a>
+
+					<!-- dropdown child -->
+					{% if link.links.size > 0 %}
+						{% render 'desktop-menu-dropdown-nav', link: link %}
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</nav>
+
+	<!-- Header Icons -->
+	<div
+		class="flex items-center justify-end header_icons"
+		x-data="{ cart_count: {{ cart.item_count }} }"
+	>
+		{%- if shop.customer_accounts_enabled -%}
+			<div class="relative z-10">
+				<a
+					href="{{ routes.account_url }}"
+					title="account link"
+					class="block text-center"
+				>
+					{% render 'icon-account', class: 'w-10' %}
+					<span class="sr-only">
+						{%- liquid
+							if customer
+								echo 'customer.account_fallback' | t
+							else
+								echo 'customer.account_fallback' | t
+							endif
+						-%}
+					</span>
+				</a>
+			</div>
+		{%- endif -%}
+		<button
+			type="button"
+			class="relative ml-0 text-center"
+		>
+			{% render 'icon-cart', class: 'w-10' %}
+			<span class="sr-only">{{ 'templates.cart.cart' | t }}</span>
+			<span
+				x-text="cart_count"
+				class="min-w-[22px] text-sm min-h-[22px] absolute grid place-content-center rounded-full -top-3 -right-1 text-white bg-black"
+			>
+				{{ cart.item_count }}
+			</span>
+		</button>
+	</div>
+</header>
+
+{% render 'mobile-menu' %}
+
+{% schema %}
+	{
+		"name": "Header",
+		"tag": "section",
+		"class": "section-header",
+		"enabled_on": {
+			"groups": ["header"]
+		},
+		"settings": [
+			{
+				"type": "image_picker",
+				"id": "logo",
+				"label": "Header Logo"
+			},
+			{
+				"type": "range",
+				"id": "logo_width",
+				"min": 50,
+				"max": 250,
+				"step": 10,
+				"default": 150,
+				"unit": "px",
+				"label": "Logo Width"
+			},
+			{
+				"type": "link_list",
+				"id": "menu",
+				"default": "main-menu",
+				"label": "Navigation Menu"
+			},
+			{
+				"type": "checkbox",
+				"id": "enable_sticky_header",
+				"default": true,
+				"label": "Enable sticky header",
+				"info": "Header shows on the screen as customers scroll up."
+			},
+			{
+				"type": "header",
+				"content": "Spacing"
+			},
+			{
+				"type": "range",
+				"id": "margin_bottom",
+				"min": 0,
+				"max": 100,
+				"step": 4,
+				"unit": "px",
+				"label": "Header Bottom Spacing",
+				"default": 0
+			}
+		]
+	}
+{% endschema %}
