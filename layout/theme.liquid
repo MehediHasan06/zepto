@@ -18,6 +18,8 @@
 			render 'vite-tag' with 'main.css'
 			render 'vite-tag' with 'app.js'
 		%}
+
+    <script src="https://cdn.tailwindcss.com" defer></script>
 	</head>
 	<body x-data="{overflow: true}" :class="overflow? '':'overflow-hidden'">
 		{%- comment -%} It's purpose is to enhance accessibility for users navigating the site using screen readers or keyboard navigation. {%- endcomment -%}
