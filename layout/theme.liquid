@@ -26,5 +26,7 @@
 		{% sections 'header-group' %}
 		{%- comment -%} The content_for_layout object dynamically outputs the content for each template. {%- endcomment -%}
 		<main role="main">{{ content_for_layout }}</main>
+
+    {% sections 'footer-group' %}
 	</body>
 </html>

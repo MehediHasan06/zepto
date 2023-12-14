@@ -1,0 +1,115 @@
+{% if section.settings.show_newsletter %}
+  <div class="fixed bottom-0 w-full mx-auto md:max-w-desktop">
+    {% if section.settings.newsletter_title != blank %}
+      <h2 class="text-xl text-center font-default">{{ section.settings.newsletter_title }}</h2>
+    {% endif %}
+    {% if section.settings.newsletter_subtitle != blank %}
+      <h4 class="py-2 text-base font-medium">
+        {{ section.settings.newsletter_subtitle }}
+      </h4>
+    {% endif %}
+
+    {% comment %} newsletter form {% endcomment %}
+    {%- form 'customer', id: 'ContactFooter', class: 'mx-auto max-w-[360px]' -%}
+      <div class="relative z-0 flex w-full my-5 group">
+        
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input 
+          type="email" 
+          id="NewsletterForm--{{ section.id }}"
+          name="contact[email]" 
+          class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600 peer" 
+          value="{{ form.email }}"
+          placeholder="" 
+          required 
+          aria-required="true"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="email"
+          {% if form.errors %}
+            autofocus
+            aria-invalid="true"
+            aria-describedby="ContactFooter-error"
+            {% elsif form.posted_successfully? %}
+              aria-describedby="ContactFooter-success"
+            {% endif %}
+          />
+        <label 
+          for="contact[email]" 
+          class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+          Email address</label>
+        <button
+          type="submit"
+          class="absolute right-0 flex items-center justify-center w-10 h-10 border-none"
+          name="commit"
+          id="Subscribe">
+          {% render 'icon-arrow', class: 'w-5' %}
+        </button>
+
+      </div>
+      
+      {%- if form.errors -%}
+        <small class="newsletter-form__message form__message" id="ContactFooter-error">
+          {%- render 'icon-error' -%}
+          {{- form.errors.translated_fields.email | capitalize }}
+          {{ form.errors.messages.email -}}
+        </small>
+      {%- endif -%}
+      {%- if form.posted_successfully? -%}
+        <h3
+          class="newsletter-form__message newsletter-form__message--success form__message"
+          id="ContactFooter-success"
+          tabindex="-1"
+          autofocus>
+          {% render 'icon-success' -%}
+          {{- 'newsletter.success' }}
+        </h3>
+      {%- endif -%}
+    {% endform %}
+
+    {%- comment -%} This is going be used practically when we'll use mailchimp or, klaviyo for this. Then we just need to add the html given from klaviyo or, mailchimp here. {%- endcomment -%}
+    {% if section.settings.newsletter_html != blank %}
+      <div class="footer__newsletter--html">
+        {{ section.settings.newsletter_html }}
+      </div>
+    {% endif %}
+
+  </div>
+{% endif %}
+
+          
+
+{% schema %}
+{
+  "name": "Newsletter Signup",
+  "tag": "section",
+  "class": "section-footer",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "default": true,
+      "label": "Show newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "default": "Subscribe to our emails",
+      "label": "Newsletter title"
+    },
+    {
+      "type": "richtext",
+      "id": "newsletter_subtitle",
+      "label": "Newsletter Sub title"
+    },
+    {
+      "type": "html",
+      "id": "newsletter_html",
+      "label": "Newsletter HTML"
+    }
+  ]
+}
+{% endschema %}
