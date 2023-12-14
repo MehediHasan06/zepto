@@ -48,7 +48,8 @@
 	<!-- Header Icons -->
 	<div
 		class="flex items-center justify-end header_icons"
-		x-data="{ cart_count: {{ cart.item_count }} }">
+		x-data="{ cart_count: {{ cart.item_count }} }"
+	>
 		{%- if shop.customer_accounts_enabled -%}
 			<div class="relative z-10">
 				<a

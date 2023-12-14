@@ -1,0 +1,54 @@
+{
+  "name": "Footer Group",
+  "type": "footer",
+  "sections": {
+    "newsletter": {
+      "type": "newsletter-signup",
+      "settings": {
+        "show_newsletter": true,
+        "newsletter_title": "Subscribe to our emails",
+        "newsletter_subtitle": "",
+        "newsletter_html": ""
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "07ad75f9-330a-4996-92c6-a5dcf6eb5194": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links",
+            "menu": "footer"
+          }
+        },
+        "ba77fb0a-e1db-4034-a75a-29a1bf2ecc49": {
+          "type": "social_links",
+          "settings": {
+            "heading": "Our Social Links",
+            "show_icons": true
+          }
+        },
+        "d5bd14c8-3759-4166-b143-5990cf9ff922": {
+          "type": "text",
+          "settings": {
+            "heading": "Our Mission",
+            "subtext": "<p>Share store details, promotions, or brand content with your customers.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "07ad75f9-330a-4996-92c6-a5dcf6eb5194",
+        "ba77fb0a-e1db-4034-a75a-29a1bf2ecc49",
+        "d5bd14c8-3759-4166-b143-5990cf9ff922"
+      ],
+      "settings": {
+        "copyright_text": "<p>Powered By <em><strong>Zepto<\/strong><\/em><\/p>",
+        "payment_enable": true
+      }
+    }
+  },
+  "order": [
+    "newsletter",
+    "footer"
+  ]
+}
