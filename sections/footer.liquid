@@ -1,153 +1,151 @@
 <footer class="px-6 py-2 mx-auto md:max-w-desktop md:px-12 md:py-5">
+	{%- if section.blocks.size > 0 -%}
+		<div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+			{%- for block in section.blocks -%}
+				<div class="relative">
+					{%- if block.settings.heading != blank -%}
+						<h3 class="mb-2 text-lg font-medium uppercase footer-block__heading">
+							{{- block.settings.heading | escape -}}
+						</h3>
+					{%- endif -%}
 
-  {%- if section.blocks.size > 0 -%}
-    <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
-      {%- for block in section.blocks -%}
-        <div class="relative">
-          {%- if block.settings.heading != blank -%}
-            <h3 class="mb-2 text-lg font-medium uppercase footer-block__heading">{{- block.settings.heading | escape -}}</h3>
-          {%- endif -%}
+					{%- comment -%} Footer menu, social and store mission {%- endcomment -%}
+					{%- case block.type -%}
+						{%- when 'social_links' -%}
+							{%- if block.settings.show_icons -%}
+								{% render 'social-icons' %}
+							{%- endif -%}
+						{%- when 'text' -%}
+							<div class="text-sm text-gray-500">{{ block.settings.subtext }}</div>
+						{%- when 'link_list' -%}
+							{%- if block.settings.menu != blank and block.settings.heading != blank -%}
+								<ul class="font-medium footer-block__details-content list-unstyled">
+									{%- for link in block.settings.menu.links -%}
+										<li>
+											<a href="{{ link.url }}" class="text-xs text-gray-500">{{ link.title }}</a>
+										</li>
+									{%- endfor -%}
+								</ul>
+							{%- endif -%}
+					{%- endcase -%}
+				</div>
+			{%- endfor -%}
+		</div>
+	{%- endif -%}
 
-          {%- comment -%} Footer menu, social and store mission {%- endcomment -%}
-          {%- case block.type -%}
-            {%- when 'social_links' -%}
-              {%- if block.settings.show_icons -%}                
-                {% render 'social-icons' %}
-              {%- endif -%}
-            {%- when 'text' -%}
-              <div class="text-sm text-gray-500">{{ block.settings.subtext }}</div>
-            {%- when 'link_list' -%}
-              {%- if block.settings.menu != blank and block.settings.heading != blank -%}
-                <ul class="font-medium footer-block__details-content list-unstyled">
-                  {%- for link in block.settings.menu.links -%}
-                    <li> <a href="{{ link.url }}" class="text-xs text-gray-500">{{ link.title }}</a> </li>                        
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}                   
-          {%- endcase -%}
-          
-        </div>
-      {%- endfor -%}
-    </div>
-  {%- endif -%}
-  
-  {%- comment -%} Copyright and payment icons {%- endcomment -%}
-  <div class="my-10">
-    <div class="flex flex-wrap items-center justify-center gap-10">
-
-      <div class="footer__copyright">
-        <small class="flex items-center copyright__content">
-          &copy; {{ 'now' | date: "%Y" }},  
-          {% if section.settings.copyright_text != blank %}
-            {{ section.settings.copyright_text }}
-          {% else %}
-            {{ shop.name | link_to: routes.root_url }}
-          {% endif %}
-        </small>
-      </div>
-      {%- if section.settings.payment_enable -%}
-        <div>
-          <span class="sr-only">Payment</span>
-          <ul class="flex space-x-2 list" role="list">
-            {%- for type in shop.enabled_payment_types -%}
-              <li class="list-payment__item">
-                {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-              </li>
-            {%- endfor -%}
-          </ul>
-        </div>
-      {%- endif -%}
-      
-    </div>
-  </div>
-
+	{%- comment -%} Copyright and payment icons {%- endcomment -%}
+	<div class="my-10">
+		<div class="flex flex-wrap items-center justify-center gap-10">
+			<div class="footer__copyright">
+				<small class="flex items-center copyright__content">
+					&copy; {{ 'now' | date: '%Y' }},
+					{% if section.settings.copyright_text != blank %}
+						{{ section.settings.copyright_text }}
+					{% else %}
+						{{ shop.name | link_to: routes.root_url }}
+					{% endif %}
+				</small>
+			</div>
+			{%- if section.settings.payment_enable -%}
+				<div>
+					<span class="sr-only">Payment</span>
+					<ul class="flex space-x-2 list" role="list">
+						{%- for type in shop.enabled_payment_types -%}
+							<li class="list-payment__item">
+								{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+							</li>
+						{%- endfor -%}
+					</ul>
+				</div>
+			{%- endif -%}
+		</div>
+	</div>
 </footer>
 
-
 {% schema %}
-{
-  "name": "Footer",
-  "tag": "section",
-  "class": "section-footer border-t border-gray-100 pt-10",
-  "enabled_on": {
-    "groups": ["footer"]
-  },
-  "blocks": [
-    {
-      "type": "link_list",
-      "name": "Footer Link-list",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "default": "Quick links",
-          "label": "Header"
-        },
-        {
-          "type": "link_list",
-          "id": "menu",
-          "default": "footer",
-          "label": "Link Menu"
-        }
-      ]
-    },
-    {
-      "type": "social_links",
-      "name": "Social links",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "default": "Our Social Links",
-          "label": "Header"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_icons",
-          "label": "Show icons",
-          "default": true
-        }
-      ]
-    },
-    {
-      "type": "text",
-      "name": "Footer Text",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "default": "Our Mission",
-          "label": "Header"
-        },
-        {
-          "type": "richtext",
-          "id": "subtext",
-          "default": "<p>Share store details, promotions, or brand content with your customers.</p>",
-          "label": "Subtext"
-        }
-      ]
-    }
-  ],
-  "settings": [
-    {
-      "type": "header",
-      "content": "Copyright"
-    },
-    {
-      "type": "richtext",
-      "id": "copyright_text",
-      "label": "Copyright text"
-    },
-    {
-      "type": "header",
-      "content": "Payment"
-    },
-    {
-      "type": "checkbox",
-      "id": "payment_enable",
-      "default": true,
-      "label": "Enable Payment Icons"
-    }
-  ]
-}
+	{
+		"name": "Footer",
+		"tag": "section",
+		"class": "section-footer border-t border-gray-100 pt-10",
+		"enabled_on": {
+			"groups": ["footer"]
+		},
+		"blocks": [
+			{
+				"type": "link_list",
+				"name": "Footer Link-list",
+				"settings": [
+					{
+						"type": "text",
+						"id": "heading",
+						"default": "Quick links",
+						"label": "Header"
+					},
+					{
+						"type": "link_list",
+						"id": "menu",
+						"default": "footer",
+						"label": "Link Menu"
+					}
+				]
+			},
+			{
+				"type": "social_links",
+				"name": "Social links",
+				"settings": [
+					{
+						"type": "text",
+						"id": "heading",
+						"default": "Our Social Links",
+						"label": "Header"
+					},
+					{
+						"type": "checkbox",
+						"id": "show_icons",
+						"label": "Show icons",
+						"default": true
+					}
+				]
+			},
+			{
+				"type": "text",
+				"name": "Footer Text",
+				"settings": [
+					{
+						"type": "text",
+						"id": "heading",
+						"default": "Our Mission",
+						"label": "Header"
+					},
+					{
+						"type": "richtext",
+						"id": "subtext",
+						"default": "<p>Share store details, promotions, or brand content with your customers.</p>",
+						"label": "Subtext"
+					}
+				]
+			}
+		],
+		"settings": [
+			{
+				"type": "header",
+				"content": "Copyright"
+			},
+			{
+				"type": "richtext",
+				"id": "copyright_text",
+				"label": "Copyright text"
+			},
+			{
+				"type": "header",
+				"content": "Payment"
+			},
+			{
+				"type": "checkbox",
+				"id": "payment_enable",
+				"default": true,
+				"label": "Enable Payment Icons"
+			}
+		]
+	}
 {% endschema %}
