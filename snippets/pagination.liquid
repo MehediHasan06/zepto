@@ -1,0 +1,64 @@
+{% comment %}
+    Renders a set of links for paginated results. Must be used within paginate tags.
+
+    Usage:
+    {% paginate results by 2 %}
+      {% render 'pagination', paginate: paginate, anchor: '#yourID' %}
+    {% endpaginate %}
+
+    Accepts:
+    - paginate: {Object}
+    - anchor: {String} (optional) This can be added so that on page reload it takes you to wherever you've placed your anchor tag.
+{% endcomment %}
+
+{%- if paginate.parts.size > 0 -%}
+  <div class="pagination-wrapper">
+    <nav class="pagination" role="navigation" aria-label="pagination">
+      <ul role="list">
+
+      {% comment %} previous paginaiton {% endcomment %}
+      {%- if paginate.previous -%}
+        <li>
+          <a href="{{ paginate.previous.url }}{{ anchor }}" aria-label="previous">
+            {% render 'icon-caret' %} <span class="sr-only">page</span>
+          </a>
+        </li>
+      {%- else -%}
+        <li class="disabled">
+          <span aria-hidden="true">&laquo;</span>
+          Previous <span class="sr-only">page</span>
+        </li>
+      {%- endif -%}
+
+      {% comment %} current pagination {% endcomment %}
+      {%- for part in paginate.parts -%}
+        <li>
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}{{ anchor }}"  aria-label="page-{{ part.title }}">{{ part.title }}</a>
+          {%- else -%}
+            {%- if part.title == paginate.current_page -%}
+              <span aria-current="page" aria-label="page-{{ part.title }}">{{ part.title }}</span>
+            {%- else -%}
+              <span class="pagination__item">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      {% comment %} next pagination {% endcomment %}
+      {%- if paginate.next -%}
+        <li>
+          <a href="{{ paginate.next.url }}{{ anchor }}" aria-label="next" >
+            {%- render 'icon-caret' -%} <span class="sr-only">page</span>
+          </a>
+        </li>
+      {%- else -%}
+        <li class="disabled">
+          Next <span class="visuallyhidden">page</span>
+          <span aria-hidden="true">&raquo;</span>
+        </li>
+      {%- endif -%}
+      </ul>
+    </nav>
+  </div>
+{%- endif -%}
