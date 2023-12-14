@@ -1,8 +1,11 @@
 {
-  "current": {
-  },
+  "current": "Default",
   "presets": {
     "Default": {
+      "social_twitter_link": "#",
+      "social_facebook_link": "#",
+      "social_instagram_link": "#",
+      "social_youtube_link": "#"
     }
   }
 }

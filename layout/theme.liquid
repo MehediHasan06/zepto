@@ -19,12 +19,14 @@
 			render 'vite-tag' with 'app.js'
 		%}
 	</head>
-	<body x-data="{overflow: true}" :class="overflow? '':'overflow-hidden'">
+	<body x-data="{overflow: true}" :class="overflow? '':'overflow-hidden'" class="flex flex-col min-h-screen m-0">
 		{%- comment -%} It's purpose is to enhance accessibility for users navigating the site using screen readers or keyboard navigation. {%- endcomment -%}
 		<a class="sr-only skip-to-content-link button" href="#MainContent"> Skip to content </a>
 
 		{% sections 'header-group' %}
 		{%- comment -%} The content_for_layout object dynamically outputs the content for each template. {%- endcomment -%}
 		<main role="main">{{ content_for_layout }}</main>
+
+		{% sections 'footer-group' %}
 	</body>
 </html>
