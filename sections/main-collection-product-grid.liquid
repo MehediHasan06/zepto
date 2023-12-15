@@ -1,35 +1,38 @@
-<div class="px-6 py-2 mx-auto md:max-w-desktop md:px-12 md:py-5">
+<div class="px-6 py-2 mx-auto mb-10 md:max-w-desktop md:px-12 md:py-5">
 
   <div class="">
-    {%- paginate collection.products by section.settings.products_per_page -%}
-      {%- if collection.products.size == 0 -%}
-       
+    {% paginate collection.products by section.settings.products_per_page %}
+      {% if collection.products.size == 0 %}
+        <div class="collection collection--empty" id="product-grid" data-id="{{ section.id }}">
+          <div class="loading-overlay gradient"></div>
+          <div class="title-wrapper center">
+            <h2 class="title title--primary">
+              No products found<br>
+              Use fewer filters or <a class="underlined-link link" href=\"{{ collection.url }}\">clear all<\/a>
+            </h2>
+          </div>
+        </div>
         
-
-        
-      {%- else -%}
+      {% else %}
         <div class="collection">
-          <ul id="product-grid" data-id="{{ section.id }}" class="grid grid-cols-3 gap-2">
-            {%- for product in collection.products -%}
-
+          <ul id="product-grid" data-id="{{ section.id }}" class="grid grid-cols-3 gap-5">
+            {% for product in collection.products %}
               <li class="grid__item">
                 {% render 'card-product',
                   card_product: product,
                   show_secondary_image: section.settings.show_secondary_image,
-                  show_vendor: section.settings.show_vendor,
                   show_rating: section.settings.show_rating
                 %}
               </li>
-              
-            {%- endfor -%}
+            {% endfor %}
           </ul>
   
-          {%- if paginate.pages > 1 -%}
+          {% if paginate.pages > 1 %}
             {% render 'pagination', paginate: paginate, anchor: '' %}
-          {%- endif -%}
+          {% endif %}
         </div>
-      {%- endif -%}
-    {%- endpaginate -%}
+      {% endif %}
+    {% endpaginate %}
   </div>
 
 </div>
@@ -43,23 +46,17 @@
     {
       "type": "range",
       "id": "products_per_page",
-      "min": 8,
+      "min": 6,
       "max": 24,
-      "step": 4,
-      "default": 16,
+      "step": 3,
+      "default": 9,
       "label": "Product Per Page"
     },
     {
       "type": "checkbox",
       "id": "show_secondary_image",
-      "default": false,
+      "default": true,
       "label": "Show Secondary Image"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "default": false,
-      "label": "Show Vendor"
     },
     {
       "type": "checkbox",

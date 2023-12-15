@@ -1,64 +1,54 @@
 {% comment %}
-    Renders a set of links for paginated results. Must be used within paginate tags.
+  Renders a set of links for paginated results. Must be used within paginate tags.
 
-    Usage:
-    {% paginate results by 2 %}
-      {% render 'pagination', paginate: paginate, anchor: '#yourID' %}
-    {% endpaginate %}
+  Usage:
+  {% paginate results by 2 %}
+    {% render 'pagination', paginate: paginate, anchor: '#yourID' %}
+  {% endpaginate %}
 
-    Accepts:
-    - paginate: {Object}
-    - anchor: {String} (optional) This can be added so that on page reload it takes you to wherever you've placed your anchor tag.
+  Accepts:
+  - paginate: {Object}
+  - anchor: {String} (optional) This can be added so that on page reload it takes you to wherever you've placed your anchor tag.
 {% endcomment %}
 
-{%- if paginate.parts.size > 0 -%}
-  <div class="pagination-wrapper">
+{% if paginate.parts.size > 0 %}
+  <div class="mt-10">
     <nav class="pagination" role="navigation" aria-label="pagination">
-      <ul role="list">
+      <ul role="list" class="flex flex-wrap justify-center gap-5">
 
       {% comment %} previous paginaiton {% endcomment %}
-      {%- if paginate.previous -%}
+      {% if paginate.previous %}
         <li>
           <a href="{{ paginate.previous.url }}{{ anchor }}" aria-label="previous">
-            {% render 'icon-caret' %} <span class="sr-only">page</span>
+            {% render 'icon-chevron-right', class : 'w-5 transform rotate-180' %}
           </a>
-        </li>
-      {%- else -%}
-        <li class="disabled">
-          <span aria-hidden="true">&laquo;</span>
-          Previous <span class="sr-only">page</span>
-        </li>
-      {%- endif -%}
+        </li>      
+      {% endif %}
 
       {% comment %} current pagination {% endcomment %}
-      {%- for part in paginate.parts -%}
+      {% for part in paginate.parts %}
         <li>
-          {%- if part.is_link -%}
-            <a href="{{ part.url }}{{ anchor }}"  aria-label="page-{{ part.title }}">{{ part.title }}</a>
-          {%- else -%}
-            {%- if part.title == paginate.current_page -%}
-              <span aria-current="page" aria-label="page-{{ part.title }}">{{ part.title }}</span>
-            {%- else -%}
+          {% if part.is_link %}
+            <a href="{{ part.url }}{{ anchor }}" class="text-xl border-black hover:border-b pb-0.5" aria-label="page-{{ part.title }}">{{ part.title }}</a>
+          {% else %}
+            {% if part.title == paginate.current_page %}
+              <span class="pb-0.5 text-xl border-b border-black cursor-not-allowed" aria-current="page" aria-label="page-{{ part.title }}">{{ part.title }}</span>
+            {% else %}
               <span class="pagination__item">{{ part.title }}</span>
-            {%- endif -%}
-          {%- endif -%}
+            {% endif %}
+          {% endif %}
         </li>
-      {%- endfor -%}
+      {% endfor %}
 
       {% comment %} next pagination {% endcomment %}
-      {%- if paginate.next -%}
+      {% if paginate.next %}
         <li>
           <a href="{{ paginate.next.url }}{{ anchor }}" aria-label="next" >
-            {%- render 'icon-caret' -%} <span class="sr-only">page</span>
+            {% render 'icon-chevron-right', class : 'w-5' %}
           </a>
-        </li>
-      {%- else -%}
-        <li class="disabled">
-          Next <span class="visuallyhidden">page</span>
-          <span aria-hidden="true">&raquo;</span>
-        </li>
-      {%- endif -%}
+        </li>      
+      {% endif %}
       </ul>
     </nav>
   </div>
-{%- endif -%}
+{% endif %}
