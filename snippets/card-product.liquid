@@ -1,0 +1,68 @@
+{% comment %}
+  Renders a product card
+
+  Accepts:
+  - card_product: {Object} Product Liquid object (optional)
+  - show_secondary_image: {Boolean} Show the secondary image on hover. Default: true (optional)
+  - show_rating: {Boolean} Show the product rating. Default: false
+
+  Usage:
+  {% render 'card-product', card_product: product, show_secondary_image: true, show_rating: false %}
+{% endcomment %}
+
+
+{% if card_product and card_product != empty %}
+  <a href="{{ card_product.url }}" class="block border card-wrapper group">
+    <div class="card min-h-[600px] flex flex-col justify-between">
+
+      <!-- product image -->
+      {% if card_product.featured_media %}
+        {% comment %} assigning a variable and condition for showing secondary image on hover {% endcomment %}
+        {% assign image_class = 'h-full object-cover ' %}
+        {% if card_product.media[1] != blank and show_secondary_image %}
+          {% assign image_class = image_class | append: 'group-hover:hidden' %}
+        {% endif %}
+
+        <div class="card_image h-[500px]">
+          {{ card_product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', class: image_class }}
+          {% if card_product.media[1] != blank and show_secondary_image %}
+            {{ card_product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', class: 'hidden group-hover:block h-full object-cover' }}
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="card_image h-[450px]">
+          {% comment %} for placeholder image {% endcomment %}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+
+      <!-- product details -->
+      <div class="flex flex-col h-full">
+        <h3 class="p-2">
+          {{ card_product.title }}
+        </h3>
+
+        {% render 'price-element', product: card_product, class: 'px-2 pb-2' %}
+      </div>
+        
+    </div>
+  </a>
+{% else %}
+<div class="border card-wrapper group">
+  <div class="card">
+      <div class="card_image">
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+
+      <h3 class="p-2 card__title">
+        Product Title
+      </h3>
+
+      <div class="px-2 pb-2 text-gray-600 price__element">
+        <div class="price__element-normal">
+          $0.00
+        </div>
+      </div>
+  </div>
+</div>
+{% endif %}

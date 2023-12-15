@@ -1,0 +1,110 @@
+<div class="px-6 py-2 mx-auto mb-10 md:max-w-desktop md:px-12 md:py-5">
+
+  <div class="">
+    {% paginate collection.products by section.settings.products_per_page %}
+      {% if collection.products.size == 0 %}
+        <div class="collection collection--empty" id="product-grid" data-id="{{ section.id }}">
+          <div class="loading-overlay gradient"></div>
+          <div class="title-wrapper center">
+            <h2 class="title title--primary">
+              No products found<br>
+              Use fewer filters or <a class="underlined-link link" href=\"{{ collection.url }}\">clear all<\/a>
+            </h2>
+          </div>
+        </div>
+        
+      {% else %}
+        <div class="collection">
+          <ul id="product-grid" data-id="{{ section.id }}" class="grid grid-cols-3 gap-5">
+            {% for product in collection.products %}
+              <li class="grid__item">
+                {% render 'card-product',
+                  card_product: product,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_rating: section.settings.show_rating
+                %}
+              </li>
+            {% endfor %}
+          </ul>
+  
+          {% if paginate.pages > 1 %}
+            {% render 'pagination', paginate: paginate, anchor: '' %}
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Collection Product Grid",
+  "tag": "section",
+  "class": "collection-product-grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 9,
+      "label": "Product Per Page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": true,
+      "label": "Show Secondary Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Show Rating",
+      "info": "Show Product Rating"
+    },
+    {
+      "type": "header",
+      "content": "Filtering and Sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "Enable Filtering"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "Enable Sorting"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Space",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Space",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

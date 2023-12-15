@@ -1,0 +1,37 @@
+{% comment %}
+  Renders product price with compare at price
+
+  Accepts:
+  - product: {Object} Product Liquid object (optional)
+  - class: {string}
+
+  Usage:
+  {% render 'price-element', product: product_object, class: 'px-2, py0-5' %}
+{% endcomment %}
+
+
+{% if product.available %}
+  <div class="text-gray-600 {{ class }}">
+
+    {% comment %} with compare at sale {% endcomment %}
+    {% if product.compare_at_price > product.price %}
+      <div class="price__element-sale">
+        <span class="sr-only">product sale price</span>
+        {{ product.price | money }} <s class="text-red-700">{{ product.compare_at_price | money }}</s>
+      </div>
+
+    {% comment %} Returns true if the product's variant prices vary {% endcomment %}
+    {% elsif product.price_varies %}
+      <div class="price__element-varies">
+      From {{ product.price_min | money }} to {{ product.price_max | money }}
+      </div>
+      
+    {% comment %} No compare price and different prices on variant {% endcomment %}
+    {% else %}
+      <div class="price__element-normal">
+        <span class="sr-only">product regular price</span>
+        {{ product.price | money }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
