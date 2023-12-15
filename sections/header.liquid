@@ -50,7 +50,7 @@
 		class="flex items-center justify-end header_icons"
 		x-data="{ cart_count: {{ cart.item_count }} }"
 	>
-		{%- if shop.customer_accounts_enabled -%}
+		{% if shop.customer_accounts_enabled %}
 			<div class="relative z-10">
 				<a
 					href="{{ routes.account_url }}"
@@ -59,17 +59,17 @@
 				>
 					{% render 'icon-account', class: 'w-10' %}
 					<span class="sr-only">
-						{%- liquid
+						{% liquid
 							if customer
 								echo 'Account'
 							else
 								echo 'Account'
 							endif
-						-%}
+						%}
 					</span>
 				</a>
 			</div>
-		{%- endif -%}
+		{% endif %}
 		<button
 			type="button"
 			class="relative ml-0 text-center"

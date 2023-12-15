@@ -1,39 +1,39 @@
 <footer class="px-6 py-2 mx-auto md:max-w-desktop md:px-12 md:py-5">
-	{%- if section.blocks.size > 0 -%}
+	{% if section.blocks.size > 0 %}
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-3">
-			{%- for block in section.blocks -%}
+			{% for block in section.blocks %}
 				<div class="relative">
-					{%- if block.settings.heading != blank -%}
+					{% if block.settings.heading != blank %}
 						<h3 class="mb-2 text-lg font-medium uppercase footer-block__heading">
 							{{- block.settings.heading | escape -}}
 						</h3>
-					{%- endif -%}
+					{% endif %}
 
-					{%- comment -%} Footer menu, social and store mission {%- endcomment -%}
-					{%- case block.type -%}
-						{%- when 'social_links' -%}
-							{%- if block.settings.show_icons -%}
+					{% comment %} Footer menu, social and store mission {% endcomment %}
+					{% case block.type %}
+						{% when 'social_links' %}
+							{% if block.settings.show_icons %}
 								{% render 'social-icons' %}
-							{%- endif -%}
-						{%- when 'text' -%}
+							{% endif %}
+						{% when 'text' %}
 							<div class="text-sm text-gray-500">{{ block.settings.subtext }}</div>
-						{%- when 'link_list' -%}
-							{%- if block.settings.menu != blank and block.settings.heading != blank -%}
+						{% when 'link_list' %}
+							{% if block.settings.menu != blank and block.settings.heading != blank %}
 								<ul class="font-medium footer-block__details-content list-unstyled">
-									{%- for link in block.settings.menu.links -%}
+									{% for link in block.settings.menu.links %}
 										<li>
 											<a href="{{ link.url }}" class="text-xs text-gray-500">{{ link.title }}</a>
 										</li>
-									{%- endfor -%}
+									{% endfor %}
 								</ul>
-							{%- endif -%}
-					{%- endcase -%}
+							{% endif %}
+					{% endcase %}
 				</div>
-			{%- endfor -%}
+			{% endfor %}
 		</div>
-	{%- endif -%}
+	{% endif %}
 
-	{%- comment -%} Copyright and payment icons {%- endcomment -%}
+	{% comment %} Copyright and payment icons {% endcomment %}
 	<div class="my-10">
 		<div class="flex flex-wrap items-center justify-center gap-10">
 			<div class="footer__copyright">
@@ -46,18 +46,18 @@
 					{% endif %}
 				</small>
 			</div>
-			{%- if section.settings.payment_enable -%}
+			{% if section.settings.payment_enable %}
 				<div>
 					<span class="sr-only">Payment</span>
 					<ul class="flex space-x-2 list" role="list">
-						{%- for type in shop.enabled_payment_types -%}
+						{% for type in shop.enabled_payment_types %}
 							<li class="list-payment__item">
 								{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
 							</li>
-						{%- endfor -%}
+						{% endfor %}
 					</ul>
 				</div>
-			{%- endif -%}
+			{% endif %}
 		</div>
 	</div>
 </footer>
